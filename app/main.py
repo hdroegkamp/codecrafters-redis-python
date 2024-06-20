@@ -9,8 +9,14 @@ def main():
     # Uncomment this to pass the first stage
     #
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
-    client, addr = server_socket.accept() # wait for client
-    client.send(b"+PONG\r\n")
+    conn, addr = server_socket.accept() # wait for client
+
+    while True:
+        data = conn.recv(1024)
+        if data:
+            conn.send(b"+PONG\r\n")
+        else:
+            break
     
 
 
